@@ -1,5 +1,8 @@
-const express = require('express');
-require('./config/dbConnect')
+require("dotenv").config();
+const express = require("express");
+
+require("./config/dbConnect");
+
 const app = express();
 
 //middlewares
@@ -7,5 +10,7 @@ const app = express();
 //error handler middlewares
 //listening server
 
-const PORT= process.env.PORT || 9000
+const PORT = process.env.PORT || 9000;
 app.listen(PORT, console.log(`Server is running on ${PORT}`));
+
+//password
