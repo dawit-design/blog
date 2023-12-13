@@ -91,7 +91,7 @@ app.put("/api/v1/users/update-password/:id", async (req, res) => {
 });
 
 //GET/API/V1/USERS/logout/:id
-app.get("/api/v1/users/logout", async (req, res) => {
+app.get("/api/v1/users/logout/:id", async (req, res) => {
   try {
     res.json({
       status: "successs",
@@ -165,53 +165,51 @@ app.put("/api/v1/posts/:id", async (req, res) => {
 
 //POST/API/V1/comments
 app.post("/api/v1/comments", async (req, res) => {
-    try {
-      res.json({
-        status: "successs",
-        user: "Comment Created",
-      });
-    } catch (error) {
-      res.json(error);
-    }
-  });
-  
+  try {
+    res.json({
+      status: "successs",
+      user: "Comment Created",
+    });
+  } catch (error) {
+    res.json(error);
+  }
+});
 
-  
-  //GET/API/V1/comments/:id
-  app.get("/api/v1/comments/:id", async (req, res) => {
-    try {
-      res.json({
-        status: "successs",
-        user: "Comment Details",
-      });
-    } catch (error) {
-      res.json(error);
-    }
-  });
-  
-  //DELETE/API/V1/comments/:id
-  app.delete("/api/v1/comments/:id", async (req, res) => {
-    try {
-      res.json({
-        status: "successs",
-        user: "Comment Deleted",
-      });
-    } catch (error) {
-      res.json(error);
-    }
-  });
-  
-  //UPDATE/API/V1/comments/:id
-  app.put("/api/v1/comments/:id", async (req, res) => {
-    try {
-      res.json({
-        status: "successs",
-        user: "Comment Updated",
-      });
-    } catch (error) {
-      res.json(error);
-    }
-  });
+//GET/API/V1/comments/:id
+app.get("/api/v1/comments/:id", async (req, res) => {
+  try {
+    res.json({
+      status: "successs",
+      user: "Comment Details",
+    });
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+//DELETE/API/V1/comments/:id
+app.delete("/api/v1/comments/:id", async (req, res) => {
+  try {
+    res.json({
+      status: "successs",
+      user: "Comment Deleted",
+    });
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+//UPDATE/API/V1/comments/:id
+app.put("/api/v1/comments/:id", async (req, res) => {
+  try {
+    res.json({
+      status: "successs",
+      user: "Comment Updated",
+    });
+  } catch (error) {
+    res.json(error);
+  }
+});
 //error handler middlewares
 //listening server
 
