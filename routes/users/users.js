@@ -3,7 +3,7 @@ const express = require("express");
 const userRoutes = express.Router();
 
 //POST/API/V1/USERS/REGISTER
-userRoutes.post("/api/v1/users/register", async (req, res) => {
+userRoutes.post("/register", async (req, res) => {
   try {
     res.json({
       status: "successs",
@@ -15,7 +15,7 @@ userRoutes.post("/api/v1/users/register", async (req, res) => {
 });
 
 //POST/API/V1/USERS/LOGIN
-userRoutes.post("/api/v1/users/login", async (req, res) => {
+userRoutes.post("/login", async (req, res) => {
   try {
     res.json({
       status: "successs",
@@ -26,7 +26,7 @@ userRoutes.post("/api/v1/users/login", async (req, res) => {
   }
 });
 //GET/API/V1/USERS/:id
-userRoutes.get("/api/v1/users/:id", async (req, res) => {
+userRoutes.get("/:id", async (req, res) => {
   try {
     res.json({
       status: "successs",
@@ -37,7 +37,7 @@ userRoutes.get("/api/v1/users/:id", async (req, res) => {
   }
 });
 //GET/API/V1/USERS/profile/:id
-userRoutes.get("/api/v1/users/profile/:id", async (req, res) => {
+userRoutes.get("/profile/:id", async (req, res) => {
   try {
     res.json({
       status: "successs",
@@ -49,7 +49,7 @@ userRoutes.get("/api/v1/users/profile/:id", async (req, res) => {
 });
 
 //PUT/API/V1/USERS/profile-photo-upload/:id
-userRoutes.put("/api/v1/users/profile-photo-upload/:id", async (req, res) => {
+userRoutes.put("/profile-photo-upload/:id", async (req, res) => {
   try {
     res.json({
       status: "successs",
@@ -61,7 +61,7 @@ userRoutes.put("/api/v1/users/profile-photo-upload/:id", async (req, res) => {
 });
 
 //PUT/API/V1/USERS/cover-photo-upload/:id
-userRoutes.put("/api/v1/users/cover-photo-upload/:id", async (req, res) => {
+userRoutes.put("/cover-photo-upload/:id", async (req, res) => {
   try {
     res.json({
       status: "successs",
@@ -73,7 +73,7 @@ userRoutes.put("/api/v1/users/cover-photo-upload/:id", async (req, res) => {
 });
 
 //PUT/API/V1/USERS/update-password/:id
-userRoutes.put("/api/v1/users/update-password/:id", async (req, res) => {
+userRoutes.put("/update-password/:id", async (req, res) => {
   try {
     res.json({
       status: "successs",
@@ -85,7 +85,7 @@ userRoutes.put("/api/v1/users/update-password/:id", async (req, res) => {
 });
 
 //GET/API/V1/USERS/logout/:id
-userRoutes.get("/api/v1/users/logout/:id", async (req, res) => {
+userRoutes.get("/logout/:id", async (req, res) => {
   try {
     res.json({
       status: "successs",

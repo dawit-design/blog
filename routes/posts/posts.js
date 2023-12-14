@@ -3,7 +3,7 @@ const express = require('express');
 const postRoutes = express.Router();
 
 //POST/API/V1/posts
-postRoutes.post("/api/v1/posts", async (req, res) => {
+postRoutes.post("", async (req, res) => {
     try {
       res.json({
         status: "successs",
