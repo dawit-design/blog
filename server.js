@@ -1,11 +1,17 @@
 require("dotenv").config();
 const express = require("express");
+const userRoutes = require("./routes/users/users");
+const postRoutes = require("./routes/posts/posts");
+const commentRoutes = require("./routes/comments/comments");
 
 require("./config/dbConnect");
 
 const app = express();
 
 //middlewares
+app.use('/api/something', (req, res) => {
+    res.send("I will call always")
+})
 //routes
 //users route
 //POST/API/V1/USERS/REGISTER
