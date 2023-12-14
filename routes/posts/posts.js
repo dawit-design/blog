@@ -15,7 +15,7 @@ postRoutes.post("", async (req, res) => {
   });
   
   //GET/API/V1/posts/
-  postRoutes.get("/api/v1/posts", async (req, res) => {
+  postRoutes.get("/", async (req, res) => {
     try {
       res.json({
         status: "successs",
@@ -27,7 +27,7 @@ postRoutes.post("", async (req, res) => {
   });
   
   //GET/API/V1/posts/:id
-  postRoutes.get("/api/v1/posts/:id", async (req, res) => {
+  postRoutes.get("/:id", async (req, res) => {
     try {
       res.json({
         status: "successs",
@@ -39,7 +39,7 @@ postRoutes.post("", async (req, res) => {
   });
   
   //DELETE/API/V1/posts/:id
-  postRoutes.delete("/api/v1/posts/:id", async (req, res) => {
+  postRoutes.delete("/:id", async (req, res) => {
     try {
       res.json({
         status: "successs",
@@ -51,7 +51,7 @@ postRoutes.post("", async (req, res) => {
   });
   
   //UPDATE/API/V1/posts/:id
-  postRoutes.put("/api/v1/posts/:id", async (req, res) => {
+  postRoutes.put("/:id", async (req, res) => {
     try {
       res.json({
         status: "successs",
