@@ -11,11 +11,13 @@ const app = express();
 //middlewares
 //users route
 app.use("/api/v1/users", userRoutes);
+//posts route
 app.use("/api/v1/posts", postRoutes);
-// app.use("/api/v1/comments", commentRoutes);
+//comments route
+app.use("/api/v1/comments", commentRoutes);
 
 //error handler middlewares
-//listening server
 
+//listening server
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, console.log(`Server is running on ${PORT}`));
