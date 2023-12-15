@@ -3,6 +3,7 @@ const express = require("express");
 const userRoutes = require("./routes/users/users");
 const postRoutes = require("./routes/posts/posts");
 const commentRoutes = require("./routes/comments/comments");
+const globalErrorHandler = require("./middlewares/globalErrorHandler");
 
 require("./config/dbConnect");
 
@@ -18,7 +19,7 @@ app.use("/api/v1/posts", postRoutes);
 app.use("/api/v1/comments", commentRoutes);
 
 //error handler middlewares
-
+app.use(globalErrorHandler)
 //listening server
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, console.log(`Server is running on ${PORT}`));
