@@ -1,15 +1,17 @@
 const bcrypt = require("bcryptjs");
 const User = require("../../models/user/user");
+const appErr = require("../../utils/appErr");
 
 //REGISTER
-const registerCtrl = async (req, res) => {
+const registerCtrl = async (req, res, next) => {
   const { fullName, email, password } = req.body;
   try {
     //check if user exist (using email)
     const userFound = await User.findOne({ email });
     //throw error
     if (userFound) {
-      return res.json({ status: "failed", data: "User already Exist" });
+      return next(appErr("User already Exist"))
+      // return res.json({ status: "failed", data: "User already Exist" });
     }
     //Hash password
     const salt = await bcrypt.genSalt(10);
