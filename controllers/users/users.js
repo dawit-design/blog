@@ -41,7 +41,7 @@ const loginCtrl = async (req, res, next) => {
   const { email, password } = req.body;
   //throw this error if nothing is passed in the fileds
   if(!email || !password) {
-    return next(appErr("Email and Password filed is required!"))
+    return next(appErr("Email and Password fields is required!"))
   }
   try {
     //check if email exists
@@ -49,7 +49,6 @@ const loginCtrl = async (req, res, next) => {
     if (!userFound) {
       //throw error
       return next(appErr("Invalid Credentials"))
-        // return res.json({ status: "failed", data: "Invalid Credentials" });
       }
     //verify password
     const isPasswordValid = await bcrypt.compare(password, userFound.password)
@@ -57,6 +56,9 @@ const loginCtrl = async (req, res, next) => {
       //throw an error
       return next(appErr("Invalid Credentials"))
     }
+    //save the user info
+    req.session.userAuth = userFound._id
+    console.log(req.session)
     res.json({
       status: "successs",
       data: userFound,
