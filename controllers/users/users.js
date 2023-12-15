@@ -5,6 +5,10 @@ const appErr = require("../../utils/appErr");
 //REGISTER
 const registerCtrl = async (req, res, next) => {
   const { fullName, email, password } = req.body;
+  //check if field is empty
+  if(!fullName || !email || !password){
+    return next(appErr("All Fields are Required"))
+  }
   try {
     //check if user exist (using email)
     const userFound = await User.findOne({ email });
@@ -33,23 +37,25 @@ const registerCtrl = async (req, res, next) => {
 };
 
 //LOGIN
-const loginCtrl = async (req, res) => {
+const loginCtrl = async (req, res, next) => {
   const { email, password } = req.body;
+  //throw this error if nothing is passed in the fileds
+  if(!email || !password) {
+    return next(appErr("Email and Password filed is required!"))
+  }
   try {
     //check if email exists
     const userFound = await User.findOne({ email });
     if (!userFound) {
       //throw error
-      if (userFound) {
-        return res.json({ status: "failed", data: "Invalid Credentials" });
+      return next(appErr("Invalid Credentials"))
+        // return res.json({ status: "failed", data: "Invalid Credentials" });
       }
-    }
     //verify password
     const isPasswordValid = await bcrypt.compare(password, userFound.password)
     if(!isPasswordValid){
-      if (userFound) {
-        return res.json({ status: "failed", data: "Invalid Credentials" });
-      }
+      //throw an error
+      return next(appErr("Invalid Credentials"))
     }
     res.json({
       status: "successs",
