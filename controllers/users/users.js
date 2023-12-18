@@ -101,14 +101,31 @@ const userProfileCtrl = async (req, res) => {
 };
 
 //PROFILE IMAGE
-const profileImageCtrl = async (req, res) => {
+const profileImageCtrl = async (req, res, next) => {
   try {
+    //finde user tp update
+    const userId = await req.session.userAuth;
+    const userFound = await User.findById(userId);
+    //check if user is found
+    if (!userFound) {
+      return next(appErr("User not found"));
+    }
+    //update profile photo
+    await User.findByIdAndDelete(
+      userId,
+      {
+        profileImage: req.file.path,
+      },
+      {
+        new: true,
+      }
+    );
     res.json({
       status: "successs",
-      user: "User Profile Image Upload",
+      data: "You've Successfully updated your profile photo",
     });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message));
   }
 };
 
@@ -144,7 +161,7 @@ const passwordUpdateCtrl = async (req, res, next) => {
       );
       res.json({
         status: "successs",
-        user: "Password has been changed succesfully",
+        data: "Password has been changed succesfully",
       });
     }
   } catch (error) {
