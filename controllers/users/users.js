@@ -6,15 +6,15 @@ const appErr = require("../../utils/appErr");
 const registerCtrl = async (req, res, next) => {
   const { fullName, email, password } = req.body;
   //check if field is empty
-  if(!fullName || !email || !password){
-    return next(appErr("All Fields are Required"))
+  if (!fullName || !email || !password) {
+    return next(appErr("All Fields are Required"));
   }
   try {
     //check if user exist (using email)
     const userFound = await User.findOne({ email });
     //throw error
     if (userFound) {
-      return next(appErr("User already Exist"))
+      return next(appErr("User already Exist"));
       // return res.json({ status: "failed", data: "User already Exist" });
     }
     //Hash password
@@ -40,25 +40,25 @@ const registerCtrl = async (req, res, next) => {
 const loginCtrl = async (req, res, next) => {
   const { email, password } = req.body;
   //throw this error if nothing is passed in the fileds
-  if(!email || !password) {
-    return next(appErr("Email and Password fields is required!"))
+  if (!email || !password) {
+    return next(appErr("Email and Password fields is required!"));
   }
   try {
     //check if email exists
     const userFound = await User.findOne({ email });
     if (!userFound) {
       //throw error
-      return next(appErr("Invalid Credentials"))
-      }
+      return next(appErr("Invalid Credentials"));
+    }
     //verify password
-    const isPasswordValid = await bcrypt.compare(password, userFound.password)
-    if(!isPasswordValid){
+    const isPasswordValid = await bcrypt.compare(password, userFound.password);
+    if (!isPasswordValid) {
       //throw an error
-      return next(appErr("Invalid Credentials"))
+      return next(appErr("Invalid Credentials"));
     }
     //save the user info
-    req.session.userAuth = userFound._id
-    console.log(req.session)
+    req.session.userAuth = userFound._id;
+    console.log(req.session);
     res.json({
       status: "successs",
       data: userFound,
@@ -72,9 +72,9 @@ const loginCtrl = async (req, res, next) => {
 const userDetailsCtrl = async (req, res) => {
   try {
     //get user id from params
-    const userId = req.params.id
+    const userId = req.params.id;
     //find the user
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
     res.json({
       status: "successs",
       data: user,
@@ -88,9 +88,9 @@ const userDetailsCtrl = async (req, res) => {
 const userProfileCtrl = async (req, res) => {
   try {
     //get login user
-    const userId = req.session.userAuth
+    const userId = req.session.userAuth;
     //find the user
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
     res.json({
       status: "successs",
       data: user,
@@ -125,14 +125,34 @@ const coverImageCtrl = async (req, res) => {
 };
 
 //PASSWORD UPDATE
-const passwordUpdateCtrl = async (req, res) => {
+const passwordUpdateCtrl = async (req, res, next) => {
+  const { fullName, email, password } = req.body;
   try {
+    //check if email is taken
+    if (email) {
+      const emailTaken = await User.findOne({ email });
+      if (emailTaken) {
+        return next(appErr("Email is taken", 400));
+      }
+    }
+    //update the user
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        fullName,
+        email,
+      },
+      {
+        new: true,
+      }
+    );
     res.json({
       status: "successs",
-      user: "User Password Update",
+      data: user,
     });
+    console.log(user)
   } catch (error) {
-    res.json(error);
+    res.json(next(appErr(error.message)));
   }
 };
 
