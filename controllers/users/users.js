@@ -126,7 +126,35 @@ const coverImageCtrl = async (req, res) => {
 
 //PASSWORD UPDATE
 const passwordUpdateCtrl = async (req, res, next) => {
-  const { fullName, email, password } = req.body;
+  const { password } = req.body;
+  try {
+    //check if user is updating the password
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const passwordHashed = await bcrypt.hash(password, salt);
+      //update user
+      await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          password: passwordHashed,
+        },
+        {
+          new: true,
+        }
+      );
+      res.json({
+        status: "successs",
+        user: "Password has been changed succesfully",
+      });
+    }
+  } catch (error) {
+    return next(appErr("Please provide password field"));
+  }
+};
+
+//USER UPDATE
+const userUpdateCtrl = async (req, res, next) => {
+  const { fullName, email } = req.body;
   try {
     //check if email is taken
     if (email) {
@@ -150,7 +178,7 @@ const passwordUpdateCtrl = async (req, res, next) => {
       status: "successs",
       data: user,
     });
-    console.log(user)
+    console.log(user);
   } catch (error) {
     res.json(next(appErr(error.message)));
   }
@@ -173,6 +201,7 @@ module.exports = {
   logoutCtrl,
   userProfileCtrl,
   passwordUpdateCtrl,
+  userUpdateCtrl,
   loginCtrl,
   userDetailsCtrl,
   profileImageCtrl,

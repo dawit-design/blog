@@ -6,6 +6,7 @@ const {
   userProfileCtrl,
   logoutCtrl,
   passwordUpdateCtrl,
+  userUpdateCtrl,
   profileImageCtrl,
   coverImageCtrl,
 } = require("../../controllers/users/users");
@@ -32,6 +33,9 @@ userRoutes.put("/cover-photo-upload/:id", coverImageCtrl);
 
 //PUT/API/V1/USERS/update-password/:id
 userRoutes.put("/update-password/:id", passwordUpdateCtrl);
+
+//PUT/API/V1/USERS/update-password/:id
+userRoutes.put("/update-user/:id", userUpdateCtrl);
 
 //GET/API/V1/USERS/logout/:id
 userRoutes.get("/logout/:id", logoutCtrl);
