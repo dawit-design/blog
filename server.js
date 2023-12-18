@@ -6,7 +6,6 @@ const userRoutes = require("./routes/users/users");
 const postRoutes = require("./routes/posts/posts");
 const commentRoutes = require("./routes/comments/comments");
 const globalErrorHandler = require("./middlewares/globalErrorHandler");
-const MongoStore = require("connect-mongo");
 
 require("./config/dbConnect");
 

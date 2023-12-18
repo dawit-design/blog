@@ -17,10 +17,12 @@ userRoutes.post("/register", registerCtrl);
 
 //POST/API/V1/USERS/LOGIN
 userRoutes.post("/login", loginCtrl);
+
+//GET/API/V1/USERS/profile/
+userRoutes.get("/profile", protected,  userProfileCtrl);
+
 //GET/API/V1/USERS/:id
-userRoutes.get("/:id", userDetailsCtrl);
-//GET/API/V1/USERS/profile/:id
-userRoutes.get("/profile/:id", protected,  userProfileCtrl);
+userRoutes.get("/:id", userDetailsCtrl)
 
 //PUT/API/V1/USERS/profile-photo-upload/:id
 userRoutes.put("/profile-photo-upload/:id", profileImageCtrl);
