@@ -38,8 +38,13 @@ userRoutes.put(
   profileImageCtrl
 );
 
-//PUT/API/V1/USERS/cover-photo-upload/:id
-userRoutes.put("/cover-photo-upload/:id", coverImageCtrl);
+//PUT/API/V1/USERS/cover-photo-upload/
+userRoutes.put(
+  "/cover-photo-upload/",
+  protected,
+  upload.single("profile"),
+  coverImageCtrl
+);
 
 //PUT/API/V1/USERS/update-password/:id
 userRoutes.put("/update-password/:id", passwordUpdateCtrl);

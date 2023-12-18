@@ -132,12 +132,29 @@ const profileImageCtrl = async (req, res, next) => {
 //COVER IMAGE
 const coverImageCtrl = async (req, res) => {
   try {
+    //finde user tp update
+    const userId = await req.session.userAuth;
+    const userFound = await User.findById(userId);
+    //check if user is found
+    if (!userFound) {
+      return next(appErr("User not found"));
+    }
+    //update profile photo
+    await User.findByIdAndDelete(
+      userId,
+      {
+        coverImage: req.file.path,
+      },
+      {
+        new: true,
+      }
+    );
     res.json({
       status: "successs",
-      user: "User Cover Image Upload",
+      data: "You've Successfully updated your cover photo",
     });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message));
   }
 };
 
