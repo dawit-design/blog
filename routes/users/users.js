@@ -9,6 +9,7 @@ const {
   profileImageCtrl,
   coverImageCtrl,
 } = require("../../controllers/users/users");
+const protected = require("../../middlewares/protected")
 const userRoutes = express.Router();
 
 //POST/API/V1/USERS/REGISTER
@@ -19,7 +20,7 @@ userRoutes.post("/login", loginCtrl);
 //GET/API/V1/USERS/:id
 userRoutes.get("/:id", userDetailsCtrl);
 //GET/API/V1/USERS/profile/:id
-userRoutes.get("/profile/:id", userProfileCtrl);
+userRoutes.get("/profile/:id", protected,  userProfileCtrl);
 
 //PUT/API/V1/USERS/profile-photo-upload/:id
 userRoutes.put("/profile-photo-upload/:id", profileImageCtrl);
