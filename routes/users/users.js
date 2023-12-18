@@ -41,3 +41,5 @@ userRoutes.put("/update-user/:id", userUpdateCtrl);
 userRoutes.get("/logout/:id", logoutCtrl);
 
 module.exports = userRoutes;
+
+
