@@ -64,6 +64,12 @@ const postDetailCtrl = async (req, res, next) => {
 //DELETE POST
 const postDeleteCtrl = async (req, res, next) => {
   try {
+    //find a post
+    const post = await Post.findById(req.params.id)
+    //check if the post belongs to the user
+    if(post.user.toString() !== req.session.userAuth.toString()){
+      return next(appErr("You can't delete a that doesn't belong to you!", 403))
+    }
     //delete post
     const deletedPost = await Post.findByIdAndDelete(req.params.id)
     res.json({
@@ -78,6 +84,7 @@ const postDeleteCtrl = async (req, res, next) => {
 
 //UPDATE POST
 const postUpdateCtrl = async (req, res) => {
+  const {title, description, category} = req.body
     try {
       res.json({
         status: "successs",

@@ -25,7 +25,7 @@ postRoutes.get("/", fetchPostCtrl);
 postRoutes.get("/:id", postDetailCtrl);
 
 //DELETE/API/V1/posts/:id
-postRoutes.delete("/:id", postDeleteCtrl);
+postRoutes.delete("/:id", protected, postDeleteCtrl);
 
 //UPDATE/API/V1/posts/:id
 postRoutes.put("/:id", postUpdateCtrl);
