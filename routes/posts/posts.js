@@ -1,20 +1,26 @@
-const express = require('express');
-const {postCtrl, postListCtrl, postDetailCtrl, postDeleteCtrl, postUpdateCtrl} = require("../../controllers/posts/posts") 
+const express = require("express");
+const {
+  createPostCtrl,
+  fetchPostCtrl,
+  postDetailCtrl,
+  postDeleteCtrl,
+  postUpdateCtrl,
+} = require("../../controllers/posts/posts");
 const postRoutes = express.Router();
-const protected = require('../../middleware/protected');
+const protected = require("../../middlewares/protected");
 //POST/API/V1/posts
-postRoutes.post("", postCtrl);
+postRoutes.post("", protected, createPostCtrl);
 
-  //GET/API/V1/posts/
-  postRoutes.get("/", postListCtrl);
-  
-  //GET/API/V1/posts/:id
-  postRoutes.get("/:id", postDetailCtrl);
-  
-  //DELETE/API/V1/posts/:id
-  postRoutes.delete("/:id", postDeleteCtrl);
-  
-  //UPDATE/API/V1/posts/:id
-  postRoutes.put("/:id", postUpdateCtrl);
+//GET/API/V1/posts/
+postRoutes.get("/", fetchPostCtrl);
 
-  module.exports = postRoutes;
+//GET/API/V1/posts/:id
+postRoutes.get("/:id", postDetailCtrl);
+
+//DELETE/API/V1/posts/:id
+postRoutes.delete("/:id", postDeleteCtrl);
+
+//UPDATE/API/V1/posts/:id
+postRoutes.put("/:id", postUpdateCtrl);
+
+module.exports = postRoutes;
