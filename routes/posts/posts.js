@@ -28,6 +28,6 @@ postRoutes.get("/:id", postDetailCtrl);
 postRoutes.delete("/:id", protected, postDeleteCtrl);
 
 //UPDATE/API/V1/posts/:id
-postRoutes.put("/:id", postUpdateCtrl);
+postRoutes.put("/:id",protected, upload.single('file'), postUpdateCtrl);
 
 module.exports = postRoutes;
