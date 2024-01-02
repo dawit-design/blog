@@ -1,7 +1,10 @@
-//POSTS
-
+const Post = require('../../models/post/Post');
+const User = require('../../models/user/User');
+//Create POSTS
 const postCtrl = async (req, res) => {
+ const {title, description, category,image, user} = req.body
   try {
+    //Find the user
     res.json({
       status: "successs",
       user: "Post Created",
@@ -11,7 +14,7 @@ const postCtrl = async (req, res) => {
   }
 };
 
-//POST LIST
+//Fetch POST LIST
 const postListCtrl = async (req, res) => {
   try {
     res.json({
