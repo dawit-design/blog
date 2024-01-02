@@ -28,23 +28,24 @@ const createPostCtrl = async (req, res, next) => {
       data: postCreated,
     });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message))
   }
 };
 
 //Fetch POST LIST
-const fetchPostCtrl = async (req, res) => {
+const fetchPostCtrl = async (req, res, next) => {
   try {
+    const posts = await Post.find()
     res.json({
       status: "successs",
-      user: "Post List",
+      data: posts,
     });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message));
   }
 };
 
-//POST DETAILS
+//POST DETAILS/FETCH SINGLE POST
 const postDetailCtrl = async (req, res, next) => {
   try {
     //get the id from params
