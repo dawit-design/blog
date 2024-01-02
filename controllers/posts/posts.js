@@ -5,9 +5,8 @@ const createPostCtrl = async (req, res) => {
  const {title, description, category, user} = req.body
   try {
     //Find the user
-    const userId = req.Session.userAuth
-    const userFound = await User.findyById(userId)
-    console.log(userFound);
+    const userId = req.session.userAuth
+    const userFound = await User.findById(userId)
     //create a post
     const postCreated = await Post.create({
       title,
@@ -16,9 +15,12 @@ const createPostCtrl = async (req, res) => {
       user: userFound._id,
     })
     //push the post created into the array of user's post
+    userFound.posts.push(postCreated._id)
+    //re save
+    await userFound.save()
     res.json({
-      status: "successs",
-      user: "Post Created",
+      status: "success",
+      data: postCreated,
     });
   } catch (error) {
     res.json(error);

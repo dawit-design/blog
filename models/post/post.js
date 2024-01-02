@@ -11,14 +11,14 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    catagory: {
+    category: {
       type: String,
       required: true,
       enum: ["react js", "html", "css", "node js", "javascript", "other"],
     },
     image: {
       type: String,
-      required: true,
+      // required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
