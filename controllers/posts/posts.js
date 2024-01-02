@@ -45,14 +45,18 @@ const fetchPostCtrl = async (req, res) => {
 };
 
 //POST DETAILS
-const postDetailCtrl = async (req, res) => {
+const postDetailCtrl = async (req, res, next) => {
   try {
+    //get the id from params
+    const id = req.params.id;
+    //find the post
+    const post = await Post.findById(id)
     res.json({
       status: "successs",
-      user: "Post Details",
+      data: post,
     });
   } catch (error) {
-    res.json(error);
+    next(appErr(error.message));
   }
 };
 
