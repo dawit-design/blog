@@ -71,6 +71,9 @@ const updateCommentCtrl = async (req, res, next) => {
   try {
     //find a comment
     const comment = await Comment.findById(req.params.id);
+    if(!comment){
+      return next(appErr('Comment not found'))
+    } 
     //check if the comment belongs to the user
     if (comment.user.toString() !== req.session.userAuth.toString()) {
       return next(
