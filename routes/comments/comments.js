@@ -18,6 +18,6 @@ commentRoutes.get("/:id", commentDetailsCtrl);
 commentRoutes.delete("/:id",protected, deleteCommentCtrl);
 
 //UPDATE/API/V1/comments/:id
-commentRoutes.put("/:id", updateCommentCtrl);
+commentRoutes.put("/:id", protected, updateCommentCtrl);
 
 module.exports = commentRoutes;

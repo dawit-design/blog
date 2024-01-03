@@ -1,9 +1,10 @@
 const Comment = require("../../models/comment/Comment")
 const Post = require("../../models/post/Post")
 const User = require("../../models/user/User")
+const appErr = require("../../utils/appErr")
 
 //COMMENTS
-const commentsCtrl = async (req, res) => {
+const commentsCtrl = async (req, res, next) => {
   const { message} = req.body
   try {
     //find the post
@@ -28,24 +29,24 @@ const commentsCtrl = async (req, res) => {
       data: comment,
     });
   } catch (error) {
-    res.json(error);
+    next(appErr(error));
   }
 }
 
 // COMMENT DETAILS
-const commentDetailsCtrl = async (req, res) => {
+const commentDetailsCtrl = async (req, res, next) => {
   try {
     res.json({
       status: "successs",
       user: "Comment Details",
     });
   } catch (error) {
-    res.json(error);
+    next(appErr(error));
   }
 }
 
 //DELETE COMMENTS
-const deleteCommentCtrl = async (req, res) => {
+const deleteCommentCtrl = async (req, res, next) => {
   try {//find a comment
     const comment = await Comment.findById(req.params.id);
     //check if the comment belongs to the user
@@ -61,12 +62,12 @@ const deleteCommentCtrl = async (req, res) => {
       data: "Comment Has been Deleted",
     });
   } catch (error) {
-    res.json(error);
+    next(appErr(error));
   }
 }
 
 //UPDATE COMMENTS
-const updateCommentCtrl = async (req, res) => {
+const updateCommentCtrl = async (req, res, next) => {
   try {
     //find a comment
     const comment = await Comment.findById(req.params.id);
@@ -76,11 +77,11 @@ const updateCommentCtrl = async (req, res) => {
         appErr("You can't update a comment that doesn't belong to you!", 403)
       );
     }
-    //update post
+    //update the comment
     const commentUpdated = await Post.findByIdAndUpdate(
       req.params.id,
       {
-        message,
+        message: req.body.message,
       },
       { new: true }
     );
@@ -89,7 +90,7 @@ const updateCommentCtrl = async (req, res) => {
       data: commentUpdated,
     });
   } catch (error) {
-    res.json(error);
+    next(appErr(error));
   }
 }
 
