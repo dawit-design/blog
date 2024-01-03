@@ -18,7 +18,7 @@ const commentSchema = new mongoose.Schema({
 
 //compile shcmea to form model
 
-const Comment = mongoose.model("Post", commentSchema);
+const Comment = mongoose.model("Comment", commentSchema);
 
 //export model
 module.exports = Comment;
