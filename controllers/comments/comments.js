@@ -68,9 +68,25 @@ const deleteCommentCtrl = async (req, res) => {
 //UPDATE COMMENTS
 const updateCommentCtrl = async (req, res) => {
   try {
+    //find a comment
+    const comment = await Comment.findById(req.params.id);
+    //check if the comment belongs to the user
+    if (comment.user.toString() !== req.session.userAuth.toString()) {
+      return next(
+        appErr("You can't update a comment that doesn't belong to you!", 403)
+      );
+    }
+    //update post
+    const commentUpdated = await Post.findByIdAndUpdate(
+      req.params.id,
+      {
+        message,
+      },
+      { new: true }
+    );
     res.json({
       status: "successs",
-      user: "Comment Updated",
+      data: commentUpdated,
     });
   } catch (error) {
     res.json(error);
