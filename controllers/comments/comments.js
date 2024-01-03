@@ -32,9 +32,7 @@ const commentsCtrl = async (req, res) => {
   }
 }
 
-
 // COMMENT DETAILS
-
 const commentDetailsCtrl = async (req, res) => {
   try {
     res.json({
@@ -45,13 +43,22 @@ const commentDetailsCtrl = async (req, res) => {
     res.json(error);
   }
 }
-//DELETE COMMENTS
 
+//DELETE COMMENTS
 const deleteCommentCtrl = async (req, res) => {
-  try {
+  try {//find a comment
+    const comment = await Comment.findById(req.params.id);
+    //check if the comment belongs to the user
+    if (comment.user.toString() !== req.session.userAuth.toString()) {
+      return next(
+        appErr("You can't delete a comment that doesn't belong to you!", 403)
+      );
+    }
+    //delete post
+    await Comment.findByIdAndDelete(req.params.id);
     res.json({
       status: "successs",
-      user: "Comment Deleted",
+      data: "Comment Has been Deleted",
     });
   } catch (error) {
     res.json(error);
@@ -59,7 +66,6 @@ const deleteCommentCtrl = async (req, res) => {
 }
 
 //UPDATE COMMENTS
-
 const updateCommentCtrl = async (req, res) => {
   try {
     res.json({
