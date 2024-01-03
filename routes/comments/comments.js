@@ -9,7 +9,7 @@ const protected = require("../../middlewares/protected");
 const commentRoutes = express.Router();
 
 //POST/API/V1/comments
-commentRoutes.post("/", protected, commentsCtrl);
+commentRoutes.post("/:id", protected, commentsCtrl);
 
 //GET/API/V1/comments/:id
 commentRoutes.get("/:id", commentDetailsCtrl);

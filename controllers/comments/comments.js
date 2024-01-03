@@ -1,8 +1,8 @@
+const Comment = require("../../models/comment/Comment")
 const Post = require("../../models/post/Post")
 const User = require("../../models/user/User")
-const Comment = require("../../models/comment/Comment")
-//COMMENTS
 
+//COMMENTS
 const commentsCtrl = async (req, res) => {
   const { message} = req.body
   try {
@@ -10,13 +10,13 @@ const commentsCtrl = async (req, res) => {
     const post = await Post.findById(req.params.id)
     //create the comment
     const comment = await Comment.create({
-      user: req.sessions.userAuth,
+      user: req.session.userAuth,
       message,
     })
     //push the comment to the post
     post.comments.push(comment._id)
     //find the user
-    const user = await User.findById(req.sessions.userAuth)
+    const user = await User.findById(req.session.userAuth)
     //push the comment onto the user
     user.comments.push(comment._id)
     //disable validation
